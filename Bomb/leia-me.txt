@@ -1,0 +1,4 @@
+abra a pasta bomba com o VScode
+só dar play no arquivo main
+
+controles: setinhas e barra de espaço
