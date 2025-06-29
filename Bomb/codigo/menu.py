@@ -8,12 +8,10 @@ pygame.init()
 WW, WH = 800, 600
 font_size = 36
 tela = pygame.display.set_mode((WW, WH))
-title_font = pygame.font.Font(None,font_size)
-subtitle_font = pygame.font.Font(None, font_size - 10)
 
-class Menu(pygame.sprite.Sprite):
-    def __init__(self, groups):
-        super().__init__(groups)
+class Menu():
+    def __init__(self):
+        super().__init__()
         botao =load_buttons()
         self.title_surf = transformar(pygame.image.load(botao['titulo']).convert_alpha())
         self.title_rect = self.title_surf.get_frect(center=(WW/2, WH/3-50))
@@ -33,12 +31,27 @@ class Menu(pygame.sprite.Sprite):
         self.sair_surf_unlit = transformar(pygame.image.load(botao['sair2']).convert_alpha())
         self.sair_rect = self.sair_surf_unlit.get_frect(center=(WW/2, WH/2+190))
 
+        self.visivel = True
+        self.animando = False
+        self.title_anim_y = self.title_rect.y
+        self.jogar_anim_y = self.jogar_rect.y
+        self.tutorial_anim_y = self.tutorial_rect.y
+        self.sair_anim_y = self.sair_rect.y
+        self.menu_vel = 0
+        self.menu_acc = -500
+
         
     
     def botoes(self, eventos):
+        
+        if not self.visivel:
+            return False
+        
+        tela.blit(self.title_surf, self.title_rect)
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed()[0]
         sair_clicado = False
+        jogar_clicado = False
         # Jogar
         if self.jogar_rect.collidepoint(mouse_pos):
             tela.blit(self.jogar_surf_lit, self.jogar_rect)
@@ -46,7 +59,6 @@ class Menu(pygame.sprite.Sprite):
                 tela.blit(self.jogar_surf_unlit, self.jogar_rect)
         else:
             tela.blit(self.jogar_surf_unlit, self.jogar_rect)
-
         
         # Tutorial
         if self.tutorial_rect.collidepoint(mouse_pos):
@@ -55,6 +67,7 @@ class Menu(pygame.sprite.Sprite):
                 tela.blit(self.tutorial_surf_unlit, self.tutorial_rect)
         else:
             tela.blit(self.tutorial_surf_unlit, self.tutorial_rect)
+        
         # Sair
         if self.sair_rect.collidepoint(mouse_pos):
             tela.blit(self.sair_surf_lit, self.sair_rect)
@@ -66,12 +79,23 @@ class Menu(pygame.sprite.Sprite):
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 if self.sair_rect.collidepoint(event.pos):
                     sair_clicado = True
-        
+                if self.jogar_rect.collidepoint(event.pos):
+                    self.animando = True
         return sair_clicado
 
+    def update(self, dt):
+        if self.animando:
+            self.menu_vel += self.menu_acc * dt  # pixels por segundo
+            self.title_rect.y += self.menu_vel * dt
+            self.jogar_rect.y += self.menu_vel * dt
+            self.tutorial_rect.y += self.menu_vel * dt
+            self.sair_rect.y += self.menu_vel * dt
+            if self.sair_rect.y + self.sair_rect.height < 0:
+                self.animando = False
+                self.visivel = False
 
-    def titulo(self):
-        tela.blit(self.title_surf, self.title_rect)
+
+        
 
 def load_buttons():
     return{
