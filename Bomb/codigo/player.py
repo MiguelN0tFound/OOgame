@@ -12,10 +12,10 @@ tela = pygame.display.set_mode((WW, WH))
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, groups):
+    def __init__(self, groups, x, y):
         super().__init__(groups)
         self.image = transformar(pygame.image.load(join('images', 'player.png'))).convert_alpha()
-        self.rect = self.image.get_frect(center = (WW/2, WH/2))
+        self.rect = self.image.get_frect(center = (x,y))
         self.direction = pygame.math.Vector2(0,0)
         self.last_direction = pygame.math.Vector2(0,0)
         self.speed = 130
@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, dt, paredes):
         keys = pygame.key.get_pressed()
-        dx = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
+        dx = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])   
         dy = int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP])
     
         if dx != 0 and dy == 0:
@@ -62,7 +62,6 @@ class Player(pygame.sprite.Sprite):
             self.direction.y = self.last_direction.y
     
         if self.direction.length_squared() > 0:
-            self.direction = self.direction.normalize()
             move = self.direction * self.speed * dt
     
             # Testa colisão pixel-perfect no eixo X
@@ -92,10 +91,12 @@ class Player(pygame.sprite.Sprite):
                 if p.mask.overlap(self.hitbox_mask, offset):
                     colidiu = True
                     break
+
             if colidiu:
                 self.pos.y = old_pos.y
                 self.rect.centery = self.pos.y
                 self.update_hitbox()
+    
         else:
             self.rect.center = self.pos
             self.update_hitbox()

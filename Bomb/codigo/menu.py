@@ -25,12 +25,11 @@ class Menu():
         self.jogar_rect = self.jogar_surf_unlit.get_frect(center=(WW/2, WH/2+60))
         
         
-        
-        
 
         self.sair_surf_lit = transformar(pygame.image.load(botao['sair1']).convert_alpha())
         self.sair_surf_unlit = transformar(pygame.image.load(botao['sair2']).convert_alpha())
         self.sair_rect = self.sair_surf_unlit.get_frect(center=(WW/2, WH/2+125))
+
 
         self.visivel = True
         self.animando = False
@@ -93,10 +92,8 @@ def load_buttons():
     return{
         'titulo' : join("images", 'menu', "titulo.png"),
         'jogar1' : join("images", 'menu', "menu-buttons-lit", "jogar.png"),
-        'tutorial1' : join("images", 'menu', "menu-buttons-lit", "tutorial.png"),
         'sair1' : join("images", 'menu', "menu-buttons-lit", "sair.png"),
         'jogar2' : join("images", 'menu', "menu-buttons-unlit", "jogar.png"),
-        'tutorial2' : join("images", 'menu', "menu-buttons-unlit", "tutorial.png"),
         'sair2' : join("images", 'menu', "menu-buttons-unlit", "sair.png"),
     }
     
