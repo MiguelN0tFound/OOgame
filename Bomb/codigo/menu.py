@@ -1,5 +1,5 @@
 import pygame
-from funcoes import transformar
+
 from os.path  import join
 
 #setup + imports
@@ -8,6 +8,9 @@ pygame.init()
 WW, WH = 800, 600
 font_size = 36
 tela = pygame.display.set_mode((WW, WH))
+
+def transformar(image, escala = 5):
+    return pygame.transform.scale_by(image, escala)
 
 class Menu():
     def __init__(self):
@@ -22,20 +25,17 @@ class Menu():
         self.jogar_rect = self.jogar_surf_unlit.get_frect(center=(WW/2, WH/2+60))
         
         
-        self.tutorial_surf_lit = transformar(pygame.image.load(botao['tutorial1']).convert_alpha())
-        self.tutorial_surf_unlit = transformar(pygame.image.load(botao['tutorial2']).convert_alpha())
-        self.tutorial_rect = self.tutorial_surf_unlit.get_frect(center=(WW/2, WH/2+125))
+        
         
 
         self.sair_surf_lit = transformar(pygame.image.load(botao['sair1']).convert_alpha())
         self.sair_surf_unlit = transformar(pygame.image.load(botao['sair2']).convert_alpha())
-        self.sair_rect = self.sair_surf_unlit.get_frect(center=(WW/2, WH/2+190))
+        self.sair_rect = self.sair_surf_unlit.get_frect(center=(WW/2, WH/2+125))
 
         self.visivel = True
         self.animando = False
         self.title_anim_y = self.title_rect.y
         self.jogar_anim_y = self.jogar_rect.y
-        self.tutorial_anim_y = self.tutorial_rect.y
         self.sair_anim_y = self.sair_rect.y
         self.menu_vel = 0
         self.menu_acc = -500
@@ -60,13 +60,6 @@ class Menu():
         else:
             tela.blit(self.jogar_surf_unlit, self.jogar_rect)
         
-        # Tutorial
-        if self.tutorial_rect.collidepoint(mouse_pos):
-            tela.blit(self.tutorial_surf_lit, self.tutorial_rect)
-            if mouse_click:
-                tela.blit(self.tutorial_surf_unlit, self.tutorial_rect)
-        else:
-            tela.blit(self.tutorial_surf_unlit, self.tutorial_rect)
         
         # Sair
         if self.sair_rect.collidepoint(mouse_pos):
@@ -88,9 +81,8 @@ class Menu():
             self.menu_vel += self.menu_acc * dt  # pixels por segundo
             self.title_rect.y += self.menu_vel * dt
             self.jogar_rect.y += self.menu_vel * dt
-            self.tutorial_rect.y += self.menu_vel * dt
             self.sair_rect.y += self.menu_vel * dt
-            if self.sair_rect.y + self.sair_rect.height < 0:
+            if self.sair_rect.y + self.sair_rect.height < -100:
                 self.animando = False
                 self.visivel = False
 
