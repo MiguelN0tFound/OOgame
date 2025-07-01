@@ -1,0 +1,24 @@
+Este jogo foi feito pro Alan (não o Álan)
+
+roda em pygame-ce
+
+abra a pasta bomba com o VScode
+só dar play no arquivo main
+
+------------------------------------------------------------------------
+controles: setinhas para andar e espaço para atirar os projeteis coletaveis
+
+seja uma boa bomba robô e chegue na nave alienígena e detone-a para salvar a humanidade da invasão!!!!
+------------------------------------------------------------------------
+
+Créditos:
+Arte: Miguel :p
+Código: Miguel, Henrique Araújo e Pedro Hiki
+Game design e levels design: Miguel, Henrique Araújo e Pedro Hiki
+
+Musicas:
+1. I Love My 8-bit Game Console (menu)
+https://pixabay.com/music/video-games-i-love-my-8-bit-game-console-301272/
+
+2. Red E – 8-Bit Chiptune for Retro Gaming (gameplay)
+https://pixabay.com/music/video-games-red-e-8-bit-chiptune-for-retro-gaming-356128/
