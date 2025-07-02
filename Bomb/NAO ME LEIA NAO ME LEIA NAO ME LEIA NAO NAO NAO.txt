@@ -1,4 +1,4 @@
-Este jogo foi feito pro Alan (não o Álan)
+Este jogo foi feito pro Allan (não o Állan)
 
 roda em pygame-ce
 
